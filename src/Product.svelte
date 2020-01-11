@@ -1,10 +1,20 @@
 <script>
+    import { createEventDispatcher } from 'svelte';
+
+    import Button from './Button.svelte';
+
     // avoiding to use same names to avoid confusion but same names can be used!
     export let productTitle; 
     export let productPrice;
     export let productDescription;
     // these variables are props and if exported with export keyword means that they
     // can be set from putside of this component
+
+    const dispatch = createEventDispatcher();
+
+    function addToCart() {
+        dispatch('addcart', productTitle);
+    }
 </script>
 
 <style>
@@ -30,24 +40,12 @@
     p {
         margin: .25rem 0;
     }
-
-    button {
-        font: inherit;
-        padding: .25rem .5rem;
-        background: crimson;
-        border: 1px solid crimson;
-        color: #fff;
-        cursor: pointer;
-    }
-        button:hover,
-        button:active {
-            box-shadow: 1px 1px 6px rgba(0, 0, 0, .3);
-        }
 </style>
 
 <div>
     <h1>{productTitle}</h1>
     <h2>{productPrice}</h2>
     <p>{productDescription}</p>
-    <button>Add to Cart</button>
+
+    <Button on:click={addToCart}>Add to Cart</Button>
 </div>
